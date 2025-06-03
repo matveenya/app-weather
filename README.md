@@ -1,4 +1,4 @@
 1. Установка vite и sass
-npm install --save-dev vite sass
+npm install
 2. Запуск проекта 
 npm run dev
