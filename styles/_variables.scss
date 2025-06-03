@@ -1,0 +1,21 @@
+:root{
+    --current-background: url(../images/background-morning.jpg);
+    
+    --color-gray: #f3f3f3cb;
+    --color-light: #FFF;
+    --color-gray-alt: #898989da;
+
+    --border: 1px solid var(--color-gray-alt);
+    --border-radius: 5px;
+
+    --padding-button: 5px 8px;
+
+    --font-family: 'Space Grotesk', sans-serif;
+    --font-size: 18px;
+
+    --height: 100vh;
+
+    --location-coord-top: 42vmin;
+    --grid-template-column: 5vw;
+    --grid-template-row: 20vh;
+}

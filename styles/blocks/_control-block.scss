@@ -1,0 +1,96 @@
+.control-block{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    @media(max-width: 800px){
+        @include button-size;
+    }
+
+    &__buttons{
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+    }
+
+    &__button{
+        img{
+            width: 20px;
+            height: 23px;
+
+            @media(max-width: 800px){
+                height: 13px;
+                width: 15px;
+            }
+        }
+    }
+
+    &__dropdown-language{
+        position: relative;
+
+        span{
+            &::after{
+                content: '▼';
+                display: inline-block;
+                font-size: 10px;
+                vertical-align: middle;
+                padding: 0 5px;
+            }
+        }
+    }
+
+    &__list{
+
+        &-language{
+                position: absolute;
+                bottom: -80px; 
+                left: 0;
+                background-color: var(--color-gray-alt);
+                border: var(--border);
+                border-radius: var(--border-radius);
+                padding: 5px;
+                z-index: 10;
+                width: 57px;
+
+                @media(max-width: 800px){
+                    bottom: -45px;
+                    width: 48px;
+                }
+        }
+    }
+
+    &__switcher-degrees{
+        display: flex;
+        justify-content: start;
+
+        .button{
+            margin-right: 0;
+            
+            &_passive{
+                opacity: 0.4;
+            }
+
+        }
+    }
+
+    &__search{
+        display: flex;
+        justify-content: end;
+        align-items: end;
+
+        input{
+            @include decorate-button;
+            opacity: 0.4;
+
+            &::placeholder{
+                color: var(--color-light);
+            }
+
+            @media(max-width: 420px){
+                width: 20vw;
+            }
+        }
+    }
+  
+}
+
