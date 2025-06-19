@@ -1,15 +1,16 @@
-import { apiKey } from './config.js';
+import { API_KEY } from './config.js';
 import {  date, icon, town, humidity, wind, 
     perceivedTemperature, weatherDescription, 
     degrees, degreesForDays, iconForDays, dateForDays } from './dom-elements.js';
 import { translations } from './translations.js';
 
-let timeUpdateInterval = null;
+let timeUpdateTimeout = null;
 
 export async function getCityTime(city) {
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`);
         const result = await response.json();
+
         return result.timezone;
     } catch(err) {
         alert(err);
@@ -17,10 +18,12 @@ export async function getCityTime(city) {
 }
 
 export function updateCityTime(timezoneOffset, lang) {
-    if(timeUpdateInterval) clearTimeout(timeUpdateInterval);
+    if (timeUpdateTimeout) {
+        clearTimeout(timeUpdateTimeout)
+    };
 
     const nowDate = new Date();
-    const utc = nowDate.getTime() + (nowDate.getTimezoneOffset() * 60000);
+    const utc = nowDate.getTime() + (nowDate.getTimezoneOffset() * 60 * 1000);
     const cityTime = new Date(utc + (timezoneOffset * 1000));
 
     date.textContent = cityTime.toLocaleString(lang, {
@@ -33,19 +36,20 @@ export function updateCityTime(timezoneOffset, lang) {
         hour12: false
     });
 
-    timeUpdateInterval = setTimeout(() => updateCityTime(timezoneOffset, lang), 1000);
+    timeUpdateTimeout = setTimeout(() => updateCityTime(timezoneOffset, lang), 1000);
 }
 
 export async function getWeather(city, temp, lang) {
-    if(!city) return;
+    if (!city) return;
 
     try {
         const timezoneOffset = await getCityTime(city);
-        if(timezoneOffset === undefined) throw new Error("Failed to get time zone");
+        if (timezoneOffset === undefined) throw new Error("Failed to get time zone");
 
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${temp}&lang=${lang}`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${API_KEY}&units=${temp}&lang=${lang}`);
+        console.log(response);
 
-        if(!response.ok) throw new Error(translations[lang].cityNotFound);
+        if (!response.ok) throw new Error(translations[lang].cityNotFound);
 
         const result = await response.json(); 
 
@@ -53,8 +57,7 @@ export async function getWeather(city, temp, lang) {
 
         console.log(result);
 
-        const iconUrl = `https://openweathermap.org/img/wn/${result.list[0].weather[0].icon}.png`;
-        icon.src = iconUrl;
+        icon.src = `https://openweathermap.org/img/wn/${result.list[0].weather[0].icon}.png`;
 
         town.textContent = result.city.name + ',' + ' ' + result.city.country;
         humidity.textContent = translations[lang].humidity + result.list[0].main.humidity.toFixed(0) + '%';
@@ -65,10 +68,11 @@ export async function getWeather(city, temp, lang) {
 
         let index = 0;
         let posDay = 6;
-        while(posDay <= 22){
+
+        while(posDay <= 22) {
             degreesForDays[index].textContent = result.list[posDay].main.temp.toFixed(0) + '°';
             iconForDays[index].src = `https://openweathermap.org/img/wn/${result.list[posDay].weather[0].icon}.png`;
-            if(lang === 'be'){
+            if (lang === 'be') {
                 dateForDays[index].textContent = translations[lang].days[new Date((result.list[posDay].dt + timezoneOffset) * 1000).getDay()]
             } else {
                 dateForDays[index].textContent = new Date((result.list[posDay].dt + timezoneOffset) * 1000).toLocaleDateString(lang, {weekday: 'long'});

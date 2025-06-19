@@ -1,6 +1,6 @@
-const apiKey = 'd38e9edfe3775201d24f88cdbed639f4';
-const openCageApiKey = 'ce0dfdd4c58643fc88e5a7995ddeaf4d';
-const degreesArr = ['metric', 'imperial'];
-const languageArr = ['en', 'ru', 'be'];
+const API_KEY = import.meta.env.VITE_OPEN_WEATHER_API_KEY;
+const OPEN_CAGE_API_KEY = import.meta.env.VITE_OPEN_CAGE_API_KEY;
+const DEGREES_ARR = ['metric', 'imperial'];
+const LANGUAGE_ARR = ['en', 'ru', 'be'];
 
-export { apiKey, openCageApiKey, degreesArr, languageArr };
+export { API_KEY, OPEN_CAGE_API_KEY, DEGREES_ARR, LANGUAGE_ARR };

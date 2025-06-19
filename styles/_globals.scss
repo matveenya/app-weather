@@ -1,4 +1,4 @@
-body{
+body {
     background-image: var(--current-background);
     background-repeat: no-repeat;
     background-size: cover;
@@ -15,7 +15,7 @@ body{
     }
 }
 
-.container{
+.container {
     padding: 30px 100px;
     position: relative;
 
@@ -24,16 +24,16 @@ body{
     }
 }
 
-a{
+a {
     text-decoration: none;
     color: inherit;
 }
 
-ul{
+ul {
     list-style-type: none;
 }
 
-h1{
+h1 {
     @include font-size(2);
 
     @media(max-width: 600px){
@@ -41,7 +41,7 @@ h1{
     }
 }
 
-h2{
+h2 {
     @include font-size(1);
 
     @media(max-width: 600px){
@@ -49,15 +49,15 @@ h2{
     }
 }
 
-.button{
+.button {
     @include decorate-button;
     margin-right: 10px;
-}
 
-.button:hover{
-    @include button-hover;
-}
+    &:hover {
+        @include button-hover;
+    }
 
-.button:active{
-    @include button-active;
+    &:active {
+        @include button-active;
+    }
 }

@@ -1,4 +1,4 @@
-import { degreesArr, languageArr } from './config.js';
+import { DEGREES_ARR, LANGUAGE_ARR } from './config.js';
 import { translations } from './translations.js';
 import { getWeather, getCityTime, updateCityTime } from './weather-service.js';
 import { getCoord, updateMap, getCityByCoords, startDefaultCity } from './geolocation-service.js';
@@ -28,21 +28,27 @@ import {
 } from './dom-elements.js';
 
 import { updateTranslations } from './ui-helpers.js';
-import { changeBackground, backgrounds } from './change-background.js';
+import { changeBackgroundButton, backgrounds } from './change-background.js';
 
-let temp = degreesArr[0];
-let lang = languageArr[0];
+let temperature = DEGREES_ARR[0];
+let lang = LANGUAGE_ARR[0];
 let timeUpdateInterval = null;
 
-searchBtn.addEventListener('click', (event) => {
+function updateCiteWeatherAndCoord(){
+    const currentCity = town.textContent.split(',')[0].trim();
+    getCoord(currentCity, lang);
+    getWeather(currentCity, temperature, lang);
+}
+
+searchBtn.addEventListener('click', () => {
     getCoord(searchField.value, lang);
-    getWeather(searchField.value, temp, lang);
+    getWeather(searchField.value, temperature, lang);
 });
 
 searchField.addEventListener('keydown', (event) => {
-    if(event.key === 'Enter'){
+    if (event.key === 'Enter') {
         getCoord(searchField.value, lang);
-        getWeather(searchField.value, temp, lang);
+        getWeather(searchField.value, temperature, lang);
     }
 })
 
@@ -53,17 +59,14 @@ switcherDegrees.addEventListener('click', (event) => {
     celsiusDegrees.classList.toggle('button_passive', isFahrenheit);
     fahrenheitDegrees.classList.toggle('button_passive', isCelsius);
     
-    temp = degreesArr[isFahrenheit ? 1 : 0];
+    temperature = DEGREES_ARR[isFahrenheit ? 1 : 0];
 
     if (town.textContent && town.textContent !== '') {
-        const currentCity = town.textContent.split(',')[0].trim();
-        getCoord(currentCity, lang);
-        getWeather(currentCity, temp, lang);
+        updateCiteWeatherAndCoord()
     }
 });
 
 dropdownLanguage.addEventListener('click', (event) => {
-    
     if (event.target.classList.contains('control-block__dropdown-language') || 
         event.target.classList.contains('control-block__item-language_active')) {
             list.hidden = !list.hidden;
@@ -71,16 +74,13 @@ dropdownLanguage.addEventListener('click', (event) => {
     }
 
     if (event.target.tagName === 'A') {
-        const selectedLang = event.target.textContent.toLowerCase();
-        lang = selectedLang;
+        lang = event.target.textContent.toLowerCase();
         document.querySelector('.control-block__item-language_active').textContent = lang.toUpperCase();
             
         updateTranslations(lang);
             
-        if (town.textContent && town.textContent !== '') {
-            const currentCity = town.textContent.split(',')[0].trim();
-            getCoord(currentCity, lang);
-            getWeather(currentCity, temp, lang);
+        if (town.textContent) {
+            updateCiteWeatherAndCoord()
         }
             
         list.hidden = true;
@@ -89,20 +89,19 @@ dropdownLanguage.addEventListener('click', (event) => {
 });
 
 document.addEventListener('DOMContentLoaded', (event) => {
-     if ("geolocation" in navigator) {
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
+
+     if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition( async (position) => {
                 const city = await getCityByCoords(position.coords.latitude, position.coords.longitude, lang);
                 if (city) {
                     searchField.value = city;
                     getCoord(city, lang);
-                    getWeather(city, temp, lang);
+                    getWeather(city, temperature, lang);
                 } else {
                     startDefaultCity();
                 }
-            },
-            (error) => {
-                console.log("Пользователь отказал в доступе или ошибка геолокации:", error);
+            }, (error) => {
+                console.log('Пользователь отказал в доступе или ошибка геолокации:', error);
                 startDefaultCity();
             },
             { timeout: 1000 }
@@ -112,9 +111,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
     }
 });
 
-let index = 0;
+let indexBackgroundChange = 0;
 
-changeBackground.addEventListener('click', (event) => {
-    index = (index + 1) % backgrounds.length;
-    document.body.style.setProperty('--current-background',`${backgrounds[index]}`);
+changeBackgroundButton.addEventListener('click', (event) => {
+    indexBackgroundChange = (indexBackgroundChange + 1) % backgrounds.length;
+    document.body.style.setProperty('--current-background',`url(${backgrounds[indexBackgroundChange]})`);
 }) 

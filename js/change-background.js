@@ -1,9 +1,9 @@
-export const changeBackground = document.querySelector('.button');
+export const changeBackgroundButton = document.querySelector('.button');
 export const backgrounds = [
-    'url(../images/background-morning.jpg)',
-    'url(../images/background-night.jpg)',
-    'url(../images/background-lightning.jpg)',
-    'url(../images/background-cloudy.jpg)',
-    'url(../images/background-sunny.jpg)',
-    'url(../images/lightning.jpg)'
+    '../images/background-morning.jpg',
+    '../images/background-night.jpg',
+    '../images/background-lightning.jpg',
+    '../images/background-cloudy.jpg',
+    '../images/background-sunny.jpg',
+    '../images/lightning.jpg'
 ];
