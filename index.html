@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application weather</title>
+    <link rel="stylesheet" href="styles/style.scss">
+    <link rel="icon" href="images/icon/favicon.jpg">
+</head>
+<body>
+    <div class="container">
+        <section class="control-block">
+            <div class="control-block__buttons">
+                <button class="control-block__button button">
+                    <img src="images/icon/circular.png" alt="Change background">
+                </button>
+                <button class="control-block__dropdown-language button">
+                    <span class="control-block__item-language_active">EN</span>
+                    <ul class="control-block__list-language" hidden>
+                        <li class="control-block__item-language">
+                            <a href="#">EN</a>
+                        </li>
+                        <li class="control-block__item-language">
+                            <a href="#">RU</a>
+                        </li>
+                        <li class="control-block__item-language">
+                            <a href="#">BE</a>
+                        </li>
+                    </ul>
+                </button>
+                <div class="control-block__switcher-degrees">
+                    <button class="control-block__button button fahrenheit button_passive">°F</button>
+                    <button class="control-block__button button celsius">°C</button>
+                </div>
+            </div>
+            <div class="control-block__search">
+                <input class="control-block__search-input" type="text" placeholder="Seacrh city">
+                <button class="control-block__search-button button">SEARCH</button>
+            </div>
+        </section>
+
+        <section class="card">
+            <div class="card-header">
+                <h1 class="card-header__title"></h1>
+                <p class="card-header__date"></p>
+            </div>
+            <div class="card-main card-main_big">
+                <div class="card-main__degrees card-main__degrees_big"></div>
+                <img src="" alt="weather icon" class="card-main__icon card-main__icon_big">
+            </div>
+            <div class="card-details">
+                <p class="card-details__detail weather-description"></p>
+                <p class="card-details__detail perceived-temperature"></p>
+                <p class="card-details__detail wind"></p>
+                <p class="card-details__detail humidity"></p>
+            </div>
+        </section>
+
+        <section class="cards">
+            <div class="card-main card-main_small">
+                <h2 class="card-main__title card-main__title_small"></h2>
+                <div class="card-main__degrees card-main__degrees_small"></div>
+                <img src="" alt="weather icon" class="card-main__icon card-main__icon_small">
+            </div>
+            <div class="card-main card-main_small">
+                <h2 class="card-main__title card-main__title_small"></h2>
+                <div class="card-main__degrees card-main__degrees_small"></div>
+                <img src="" alt="weather icon" class="card-main__icon card-main__icon_small">
+            </div> 
+            <div class="card-main card-main_small">
+                <h2 class="card-main__title card-main__title_small"></h2>
+                <div class="card-main__degrees card-main__degrees_small"></div>
+                <img src="" alt="weather icon" class="card-main__icon card-main__icon_small">
+            </div>      
+        </section>
+
+        <section class="location">
+            <div class="location__map">
+                <iframe src="" frameborder="1" allowfullscreen="true" style="position:relative;"></iframe>
+            </div>
+            <div class="location__coords">
+                <p class="location__latitude"></p>
+                <p class="location__longtitude"></p>
+            </div>
+        </section>
+
+    </div>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>

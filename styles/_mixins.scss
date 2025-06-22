@@ -1,0 +1,34 @@
+@mixin decorate-button {
+    color: var(--color-light);
+    background-color: var(--color-gray-alt);
+    border: var(--border);
+    border-radius: var(--border-radius);
+    opacity: 0.8;
+    padding: var(--padding-button);
+    cursor: pointer;
+    position: relative;
+    top: 0;
+}
+
+@mixin button-size {
+    @include font-size(0.5);
+}
+
+@mixin button-hover {
+    opacity: 1;
+    transition: .5s;
+}
+
+@mixin button-active {
+    top: 2px;
+    box-shadow:  0 3px 7px rgba(0, 0, 0, 0.2);
+}
+
+@mixin font-size( $coeff) {
+    font-size: calc(var(--font-size) * $coeff);
+}
+
+@mixin grid ($row1, $row2, $column1, $column2) {
+    grid: calc(var(--grid-template-row) * $row1) calc(var(--grid-template-row) * $row2) / 
+    calc(var(--grid-template-column) * $column1) calc(var(--grid-template-column) * $column2);
+}
